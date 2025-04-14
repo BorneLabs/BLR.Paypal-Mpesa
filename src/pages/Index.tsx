@@ -28,7 +28,7 @@ const Index = () => {
     );
 
     setChartData(mockData.map(item => ({
-      date: item.date.getTime(),
+      date: new Date(item.date),
       value: item.close
     })));
 
@@ -48,7 +48,7 @@ const Index = () => {
       );
 
       setChartData(newData.map(item => ({
-        date: item.date.getTime(),
+        date: new Date(item.date),
         value: item.close
       })));
     }, 60000);
