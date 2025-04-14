@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   ResponsiveContainer, 
   AreaChart, 
@@ -58,6 +58,20 @@ const HistoricalChart: React.FC = () => {
     setData(formattedData);
   }, [selectedRange]);
   
+  // Determine if trend is increasing
+  const isTrendIncreasing = useMemo(() => {
+    if (data.length < 2) return true;
+    const firstPoint = data[0].value;
+    const lastPoint = data[data.length - 1].value;
+    return lastPoint > firstPoint;
+  }, [data]);
+  
+  // Set colors based on trend
+  const strokeColor = isTrendIncreasing ? '#22c55e' : '#ef4444'; // Green or Red
+  const gradientId = isTrendIncreasing ? 'historicalUp' : 'historicalDown';
+  const gradientStartColor = isTrendIncreasing ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)';
+  const gradientEndColor = isTrendIncreasing ? 'rgba(34, 197, 94, 0)' : 'rgba(239, 68, 68, 0)';
+  
   const handleRangeChange = (value: string) => {
     setSelectedRange(value);
   };
@@ -88,6 +102,12 @@ const HistoricalChart: React.FC = () => {
               data={data}
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
+              <defs>
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={gradientStartColor} stopOpacity={0.8} />
+                  <stop offset="95%" stopColor={gradientEndColor} stopOpacity={0} />
+                </linearGradient>
+              </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#333" />
               <XAxis 
                 dataKey="date" 
@@ -106,15 +126,10 @@ const HistoricalChart: React.FC = () => {
               <Area 
                 type="monotone" 
                 dataKey="value" 
-                stroke="#0EA5E9" 
-                fill="url(#colorValue)" 
+                stroke={strokeColor}
+                strokeWidth={2}
+                fill={`url(#${gradientId})`}
               />
-              <defs>
-                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#0EA5E9" stopOpacity={0} />
-                </linearGradient>
-              </defs>
             </AreaChart>
           </ResponsiveContainer>
         </div>

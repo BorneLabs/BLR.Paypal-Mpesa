@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   ResponsiveContainer,
   AreaChart as RechartsAreaChart,
@@ -40,6 +40,20 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
+  // Determine if the trend is increasing by comparing first and last data points
+  const isTrendIncreasing = useMemo(() => {
+    if (data.length < 2) return true; // Default to increasing if not enough data
+    const firstPoint = data[0].value;
+    const lastPoint = data[data.length - 1].value;
+    return lastPoint > firstPoint;
+  }, [data]);
+  
+  // Set colors based on trend
+  const strokeColor = isTrendIncreasing ? '#22c55e' : '#ef4444'; // Green or Red
+  const gradientId = isTrendIncreasing ? 'colorValueUp' : 'colorValueDown';
+  const gradientStartColor = isTrendIncreasing ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)';
+  const gradientEndColor = isTrendIncreasing ? 'rgba(34, 197, 94, 0)' : 'rgba(239, 68, 68, 0)';
+
   return (
     <Card className="glass-card">
       <CardHeader>
@@ -53,9 +67,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <defs>
-                <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#0EA5E9" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#0EA5E9" stopOpacity={0} />
+                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor={gradientStartColor} stopOpacity={0.8} />
+                  <stop offset="95%" stopColor={gradientEndColor} stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#333" />
@@ -76,8 +90,9 @@ const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
               <Area
                 type="monotone"
                 dataKey="value"
-                stroke="#0EA5E9"
-                fill="url(#colorValue)"
+                stroke={strokeColor}
+                fill={`url(#${gradientId})`}
+                strokeWidth={2}
               />
             </RechartsAreaChart>
           </ResponsiveContainer>

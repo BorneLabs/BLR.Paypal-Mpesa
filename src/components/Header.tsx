@@ -45,7 +45,8 @@ const Header: React.FC<HeaderProps> = ({ currentRate, previousRate, trendMessage
       </div>
       
       <div className={`text-center py-2 px-4 rounded-lg ${
-        isIncreasing ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
+        // Use green for strengthening (withdraw recommendation) and red for weakening (deposit recommendation)
+        trendMessage.includes("strengthening") ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
       }`}>
         <p className="text-sm font-medium">{trendMessage}</p>
       </div>
