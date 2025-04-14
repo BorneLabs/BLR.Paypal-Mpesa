@@ -54,6 +54,14 @@ const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
   const gradientStartColor = isTrendIncreasing ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)';
   const gradientEndColor = isTrendIncreasing ? 'rgba(34, 197, 94, 0)' : 'rgba(239, 68, 68, 0)';
 
+  // Convert dates to timestamps to fix invalid date issues
+  const chartData = useMemo(() => {
+    return data.map(item => ({
+      date: item.date.getTime(), // Convert Date to timestamp
+      value: item.value
+    }));
+  }, [data]);
+
   return (
     <Card className="glass-card">
       <CardHeader>
@@ -63,7 +71,7 @@ const AreaChart: React.FC<AreaChartProps> = ({ data }) => {
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <RechartsAreaChart
-              data={data}
+              data={chartData}
               margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
             >
               <defs>

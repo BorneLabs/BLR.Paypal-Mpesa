@@ -49,9 +49,9 @@ const HistoricalChart: React.FC = () => {
     const range = timeRanges.find(r => r.value === selectedRange) || timeRanges[0];
     const mockData = generateMockExchangeRates(range.days);
     
-    // Format data for the chart
+    // Format data for the chart with proper timestamps
     const formattedData = mockData.map(item => ({
-      date: item.date.getTime(),
+      date: item.date.getTime(), // Use timestamp instead of Date object
       value: item.close,
     }));
     
@@ -66,7 +66,7 @@ const HistoricalChart: React.FC = () => {
     return lastPoint > firstPoint;
   }, [data]);
   
-  // Set colors based on trend
+  // Set colors based on trend - using the requested colors
   const strokeColor = isTrendIncreasing ? '#22c55e' : '#ef4444'; // Green or Red
   const gradientId = isTrendIncreasing ? 'historicalUp' : 'historicalDown';
   const gradientStartColor = isTrendIncreasing ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)';

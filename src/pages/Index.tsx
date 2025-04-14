@@ -13,46 +13,36 @@ const Index = () => {
   const [chartData, setChartData] = useState<{ date: Date; value: number }[]>([]);
 
   useEffect(() => {
-    const mockData = generateMockExchangeRates(5);
-    const latestRate = mockData[mockData.length - 1].close;
-    const prevRate = mockData[mockData.length - 2].close;
-    
-    const fiveDayAverage = mockData.reduce((sum, day) => sum + day.close, 0) / mockData.length;
-    const isStrengthening = latestRate < fiveDayAverage;
-    
-    setCurrentRate(latestRate);
-    setPreviousRate(prevRate);
-    setTrendMessage(
-      isStrengthening
-        ? "KES is strengthening — consider withdrawing."
-        : "KES is weakening — good time to deposit."
-    );
-
-    setChartData(mockData.map(item => ({
-      date: new Date(item.date),
-      value: item.close
-    })));
-
-    const interval = setInterval(() => {
-      const newData = generateMockExchangeRates(5);
-      const newLatestRate = newData[newData.length - 1].close;
-      const newPrevRate = newData[newData.length - 2].close;
-      const newFiveDayAverage = newData.reduce((sum, day) => sum + day.close, 0) / newData.length;
-      const newIsStrengthening = newLatestRate < newFiveDayAverage;
+    // Generate initial data
+    const generateInitialData = () => {
+      const mockData = generateMockExchangeRates(5);
+      const latestRate = mockData[mockData.length - 1].close;
+      const prevRate = mockData[mockData.length - 2].close;
       
-      setCurrentRate(newLatestRate);
-      setPreviousRate(newPrevRate);
+      const fiveDayAverage = mockData.reduce((sum, day) => sum + day.close, 0) / mockData.length;
+      const isStrengthening = latestRate < fiveDayAverage;
+      
+      setCurrentRate(latestRate);
+      setPreviousRate(prevRate);
       setTrendMessage(
-        newIsStrengthening
+        isStrengthening
           ? "KES is strengthening — consider withdrawing."
           : "KES is weakening — good time to deposit."
       );
 
-      setChartData(newData.map(item => ({
+      // Create properly formatted chart data with Date objects
+      const formattedData = mockData.map(item => ({
         date: new Date(item.date),
         value: item.close
-      })));
-    }, 60000);
+      }));
+      setChartData(formattedData);
+    };
+
+    generateInitialData();
+
+    const interval = setInterval(() => {
+      generateInitialData();
+    }, 60000); // Update every minute
 
     return () => clearInterval(interval);
   }, []);
