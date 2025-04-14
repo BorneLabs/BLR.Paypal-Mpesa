@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,22 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				chart: {
+					positive: '#0EA5E9',  // Blue for upward trends
+					negative: '#EA384C',  // Red for downward trends
+					grid: '#333333',      // Grid lines
+					text: '#C8C8C9'       // Chart text
+				},
+				rates: {
+					bg: {
+						DEFAULT: '#1A1F2C', // Main background
+						card: '#222222'     // Card background
+					},
+					text: {
+						primary: '#F1F1F1',
+						secondary: '#C8C8C9'
+					}
 				}
 			},
 			borderRadius: {
