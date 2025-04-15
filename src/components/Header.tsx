@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ currentRate, previousRate }) => {
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div className="flex items-center cursor-pointer" onClick={handleBorneLabsClick}>
           <img 
-            src="/lovable-uploads/9ab54bb1-00b3-4669-a4c2-15caa696e94c.png" 
+            src="./images/logo.png" 
             alt="Bornelabs Logo" 
             className="h-8 w-8 mr-2"
           />
