@@ -9,7 +9,6 @@ import { generateMockExchangeRates } from '@/lib/mockData';
 const Index = () => {
   const [currentRate, setCurrentRate] = useState<number>(135.5);
   const [previousRate, setPreviousRate] = useState<number>(135.3);
-  const [trendMessage, setTrendMessage] = useState<string>('');
   const [chartData, setChartData] = useState<{ date: Date; value: number }[]>([]);
 
   useEffect(() => {
@@ -18,17 +17,9 @@ const Index = () => {
       const mockData = generateMockExchangeRates(5);
       const latestRate = mockData[mockData.length - 1].close;
       const prevRate = mockData[mockData.length - 2].close;
-      
-      const fiveDayAverage = mockData.reduce((sum, day) => sum + day.close, 0) / mockData.length;
-      const isStrengthening = latestRate < fiveDayAverage;
-      
+
       setCurrentRate(latestRate);
       setPreviousRate(prevRate);
-      setTrendMessage(
-        isStrengthening
-          ? "KES is strengthening — consider withdrawing."
-          : "KES is weakening — good time to deposit."
-      );
 
       // Create properly formatted chart data with Date objects
       const formattedData = mockData.map(item => ({
@@ -53,7 +44,6 @@ const Index = () => {
         <Header 
           currentRate={currentRate} 
           previousRate={previousRate}
-          trendMessage={trendMessage}
         />
         
         <div className="space-y-6">

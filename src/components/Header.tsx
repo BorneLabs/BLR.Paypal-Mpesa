@@ -5,18 +5,26 @@ import { ArrowUpFromLine, ArrowDownFromLine } from 'lucide-react';
 interface HeaderProps {
   currentRate: number;
   previousRate: number;
-  trendMessage: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentRate, previousRate, trendMessage }) => {
+const Header: React.FC<HeaderProps> = ({ currentRate, previousRate }) => {
   const isIncreasing = currentRate > previousRate;
   const changeAmount = Math.abs(currentRate - previousRate).toFixed(2);
   const changePercent = ((Math.abs(currentRate - previousRate) / previousRate) * 100).toFixed(2);
   
+  const handleBorneLabsClick = () => {
+    window.open('https://www.bornelabs.tech', '_blank');
+  };
+  
   return (
     <div className="flex flex-col space-y-4 mb-6 py-4 border-b border-border">
       <div className="flex flex-col md:flex-row justify-between items-center">
-        <div className="flex items-center">
+        <div className="flex items-center cursor-pointer" onClick={handleBorneLabsClick}>
+          <img 
+            src="/lovable-uploads/9ab54bb1-00b3-4669-a4c2-15caa696e94c.png" 
+            alt="Bornelabs Logo" 
+            className="h-8 w-8 mr-2"
+          />
           <h1 className="text-2xl md:text-3xl font-bold">
             <span className="text-[#10b0c2]">Borne</span>
             <span className="text-[#fea506]">labs</span>
@@ -44,11 +52,17 @@ const Header: React.FC<HeaderProps> = ({ currentRate, previousRate, trendMessage
         </div>
       </div>
       
-      <div className={`text-center py-2 px-4 rounded-lg ${
-        // Use green for strengthening (withdraw recommendation) and red for weakening (deposit recommendation)
-        trendMessage.includes("strengthening") ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
-      }`}>
-        <p className="text-sm font-medium">{trendMessage}</p>
+      <div className="text-center py-2 px-4 rounded-lg">
+        <p className="text-sm font-medium">
+          Visit <a 
+            href="https://www.bornelabs.tech" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-[#10b0c2] hover:underline"
+          >
+            Bornelabs
+          </a> for more projects
+        </p>
       </div>
     </div>
   );
