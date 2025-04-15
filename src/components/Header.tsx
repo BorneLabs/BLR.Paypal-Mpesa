@@ -20,11 +20,6 @@ const Header: React.FC<HeaderProps> = ({ currentRate, previousRate }) => {
     <div className="flex flex-col space-y-4 mb-6 py-4 border-b border-border">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div className="flex items-center cursor-pointer" onClick={handleBorneLabsClick}>
-          <img 
-            src="https://github.com/BorneLabs/BLR.Paypal-Mpesa/blob/main/src/images/Blogo.png" 
-            alt="Bornelabs Logo" 
-            className="h-8 w-8 mr-2"
-          />
           <h1 className="text-2xl md:text-3xl font-bold">
             <span className="text-[#10b0c2]">Borne</span>
             <span className="text-[#fea506]">labs</span>
