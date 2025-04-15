@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bornelabs Live Rates</title>
+  <script>
+    // Single Page Apps for GitHub Pages
+    // https://github.com/rafgraph/spa-github-pages
+    (function() {
+      var pathSegments = window.location.pathname.split('/');
+      var repoName = pathSegments[1];
+      var path = window.location.pathname.replace('/' + repoName, '');
+      
+      // Redirect to the index.html with the correct query parameters
+      sessionStorage.setItem('redirect', path);
+      window.location.replace(window.location.origin + '/' + repoName + '/?redirect=' + path);
+    })();
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
