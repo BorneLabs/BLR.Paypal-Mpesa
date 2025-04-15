@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/BLR.Paypal-Mpesa/", // This ensures assets are loaded correctly on GitHub Pages
+  base: "/BLR.Paypal-Mpesa/", // For Github pages to run corectly i changed it to ./ acha tuone
   server: {
     host: "::",
     port: 8080,
